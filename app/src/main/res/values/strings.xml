@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">gortega-FEELSBOOK</string>
+    <string name="upper_header">How are you feeling today?</string>
+    <string name="love_button">Love</string>
+    <string name="joy_button">Joy</string>
+    <string name="suprise_button">Suprise</string>
+    <string name="anger_button">Anger</string>
+    <string name="sad_button">Sadness</string>
+    <string name="fear_button">Fear</string>
+    <string name="lower_header">Other options</string>
+    <string name="history_button">History</string>
+    <string name="count_button">Count</string>
+</resources>
