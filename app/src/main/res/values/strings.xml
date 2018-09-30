@@ -10,4 +10,7 @@
     <string name="lower_header">Other options</string>
     <string name="history_button">History</string>
     <string name="count_button">Count</string>
+    <string name="history_header">Past feelings:</string>
+    <string name="count_header">Count of emotions</string>
+    <string name="feel_comment">Enter an optional comment...</string>
 </resources>
