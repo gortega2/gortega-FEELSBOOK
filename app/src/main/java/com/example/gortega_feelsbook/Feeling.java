@@ -7,6 +7,8 @@ public class Feeling {
     private Date curdate;
     private String message;
     private int MAX_CHARS = 100;
+    private int count = 0;
+
 
     public void Entry(){
         this.curdate = new Date();
@@ -19,7 +21,6 @@ public class Feeling {
         this.message = message;
 
     }
-
     public String getMesssage(){
         return this.message;
     }
