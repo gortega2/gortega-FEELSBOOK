@@ -61,6 +61,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fearbutton.setOnClickListener(this);
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        loadFromFile();
+    }
+
 
 
     // Calls different methods depending on what button is pressed
@@ -118,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-    //Switches to the history activity
+    //Switches to the history activity and sends feelingList as string using gson
     public void viewHistory ( View view){
         //Do something when user taps history button
         Intent intent = new Intent(this, history_activity.class);
@@ -127,9 +133,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
-
+    //Reads from file using gson and sets feelingList
     private void loadFromFile() {
-        //ArrayList<String> tweets = new ArrayList<String>();
         try {
             FileInputStream fis = openFileInput(FILENAME);
             InputStreamReader isr = new InputStreamReader(fis);
@@ -150,6 +155,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
     }
+
+    //Saves to file using gson serialization
     private void saveInFile() {
         try {
             FileOutputStream fos = openFileOutput(FILENAME, 0);
@@ -174,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    //Switches to the count activity
+    //Switches to the count activity and sends feelingList as string using gson
     public void viewCount( View view){
         //Do something when user taps count button
         Intent intent = new Intent(this, count_activity.class);
