@@ -51,4 +51,8 @@ public class Feeling {
             throw new MessageTooLong();
         }
     }
+
+    public String toString(){
+        return ("Type: " + getType() + " | " + getDate() + " | " + getMessage());
+    }
 }

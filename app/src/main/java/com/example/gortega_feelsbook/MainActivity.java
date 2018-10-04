@@ -32,11 +32,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static String FILENAME = "file.sav";
     private EditText bodyText;
-    private ListView oldFeelings;
     private String msgText;
-    history_activity historyList = new history_activity();
+    history_activity historyActivity = new history_activity();
     private ArrayList<Feeling> feelingList = new ArrayList<Feeling>();
-    ArrayAdapter<Feeling> adapter;
+    //ArrayAdapter<Feeling> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void viewHistory ( View view){
         //Do something when user taps history button
         Intent intent = new Intent(this, history_activity.class);
+        String arrayAsString = new Gson().toJson(feelingList);
+        intent.putExtra("array", arrayAsString);
         startActivity(intent);
     }
 
@@ -135,9 +136,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             BufferedReader reader = new BufferedReader(isr);
 
             Gson gson = new Gson();
-            Type typeListTweets = new TypeToken<ArrayList<Feeling>>() {
+            Type typeListFeelings = new TypeToken<ArrayList<Feeling>>() {
             }.getType();
-            feelingList = gson.fromJson(reader, typeListTweets);
+            feelingList = gson.fromJson(reader, typeListFeelings);
             System.out.println(feelingList.size());
 
 
@@ -173,35 +174,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
-    /*private void loadData(){
-        SharedPreferences sharedpref = getSharedPreferences("shared preferences", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedpref.getString("t")
-
-    }
-
-        try {
-            FileOutputStream fos = openFileOutput(FILENAME, 0);
-            OutputStreamWriter osw = new OutputStreamWriter(fos);
-            BufferedWriter writer = new BufferedWriter(osw);
-            Gson gson = new Gson();
-            String json = gson.toJson(historyList);
-            writer.write(json);
-            writer.flush();
-            writer.close();
-
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
     //Switches to the count activity
     public void viewCount( View view){
         //Do something when user taps count button
         Intent intent = new Intent(this, count_activity.class);
+        //intent.putExtra("feeling array", feelingList);
         startActivity(intent);
     }
 
