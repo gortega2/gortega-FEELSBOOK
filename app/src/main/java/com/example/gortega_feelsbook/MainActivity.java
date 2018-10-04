@@ -178,6 +178,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void viewCount( View view){
         //Do something when user taps count button
         Intent intent = new Intent(this, count_activity.class);
+        String arrayAsString = new Gson().toJson(feelingList);
+        intent.putExtra("array", arrayAsString);
         //intent.putExtra("feeling array", feelingList);
         startActivity(intent);
     }
