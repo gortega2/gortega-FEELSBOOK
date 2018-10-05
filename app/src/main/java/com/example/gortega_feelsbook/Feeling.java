@@ -2,11 +2,13 @@ package com.example.gortega_feelsbook;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class Feeling {
     @SerializedName("date")
-    private Date curdate;
+    private String curdate;
     @SerializedName("text")
     private String message;
     @SerializedName("maxchars")
@@ -14,45 +16,54 @@ public class Feeling {
     @SerializedName("type")
     private String type;
 
-
+    //Constructors for the feeling object
     public Feeling(String type){
         this.type = type;
-        this.curdate = new Date();
+        this.curdate = convertDate(new Date(System.currentTimeMillis()));
         this.message = "";
 
     }
 
-    public void editMessage(String message){
-        this.message = "message";
-    }
-
     public Feeling(String type, String message){
         this.type = type;
-        this.curdate = new Date();
+        this.curdate = convertDate(new Date(System.currentTimeMillis()));
         this.message = message;
-
     }
+
+
+    public void editMessage(String message){
+        this.message = message;
+    }
+
+    public void editDate(String date){
+        this.curdate = date;
+    }
+
+    //Accessors for the feeling object
     public String getMessage(){
         return this.message;
     }
 
-    public Date getDate(){
+    public String getDate(){
         return this.curdate;
     }
 
     public String getType(){
         return this.type;
     }
-    //Prevents the user from entering a message that is too long
-    public void setMessage (String message)throws MessageTooLong {
-        if (message.length() > MAX_CHARS) {
-            this.message = message;
-        } else {
-            throw new MessageTooLong();
-        }
+
+    //Used by array adapter
+    public String toString(){
+        return ("Emotion: " + getType() + " | " + getDate() + " | " + getMessage());
     }
 
-    public String toString(){
-        return ("Type: " + getType() + " | " + getDate() + " | " + getMessage());
+    //Taken from https://mincong-h.github.io/2017/02/16/convert-date-to-string-in-java/
+    //Converts the current date to the ISO 8601
+    public String convertDate(Date date){
+        SimpleDateFormat sdf;
+        sdf = new SimpleDateFormat("yyyy-MM-dd 'T1' HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+       return sdf.format(date);
+
     }
 }

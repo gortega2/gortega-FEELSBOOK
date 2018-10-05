@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String msgText;
     history_activity historyActivity = new history_activity();
     private ArrayList<Feeling> feelingList = new ArrayList<Feeling>();
-    //ArrayAdapter<Feeling> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +60,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fearbutton.setOnClickListener(this);
     }
 
+    //Updates the array list to be persistent
     @Override
-    public void onResume(){
+    protected void onResume(){
         super.onResume();
         loadFromFile();
     }
@@ -71,57 +71,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // Calls different methods depending on what button is pressed
     @Override
-    public void onClick(View v){
-        switch (v.getId()) {
-            case R.id.lovebutton:
-                Toast.makeText(this, "Love button clicked", Toast.LENGTH_SHORT).show();
-                msgText = bodyText.getText().toString();
-                feelingList.add(new Feeling("love", msgText));
-                saveInFile();
-                //adapter.notifyDataSetChanged();
-                break;
+    public void onClick(View v) {
+        msgText = bodyText.getText().toString();
+        if (msgText.length() < 100) {
+            switch (v.getId()) {
+                case R.id.lovebutton:
+                    Toast.makeText(this, "Love button clicked", Toast.LENGTH_SHORT).show();
+                    feelingList.add(new Feeling("love", msgText));
+                    saveInFile();
+                    bodyText.setText("");
+                    break;
 
-            case R.id.joybutton:
-                Toast.makeText(this, "Joy button clicked", Toast.LENGTH_SHORT).show();
-                msgText = bodyText.getText().toString();
-                feelingList.add(new Feeling("joy", msgText));
-                saveInFile();
-                //adapter.notifyDataSetChanged();
-                break;
+                case R.id.joybutton:
+                    Toast.makeText(this, "Joy button clicked", Toast.LENGTH_SHORT).show();
+                    feelingList.add(new Feeling("joy", msgText));
+                    saveInFile();
+                    bodyText.setText("");
+                    break;
 
-            case R.id.surprisebutton:
-                Toast.makeText(this, "Surprise button clicked", Toast.LENGTH_SHORT).show();
-                msgText = bodyText.getText().toString();
-                feelingList.add(new Feeling("surprise", msgText));
-                saveInFile();
-                //adapter.notifyDataSetChanged();
-                break;
+                case R.id.surprisebutton:
+                    Toast.makeText(this, "Surprise button clicked", Toast.LENGTH_SHORT).show();
+                    feelingList.add(new Feeling("surprise", msgText));
+                    saveInFile();
+                    bodyText.setText("");
+                    break;
 
-            case R.id.angerbutton:
-                Toast.makeText(this, "Anger button clicked", Toast.LENGTH_SHORT).show();
-                msgText = bodyText.getText().toString();
-                feelingList.add(new Feeling("anger", msgText));
-                saveInFile();
-                //adapter.notifyDataSetChanged();
-                break;
+                case R.id.angerbutton:
+                    Toast.makeText(this, "Anger button clicked", Toast.LENGTH_SHORT).show();
+                    feelingList.add(new Feeling("anger", msgText));
+                    saveInFile();
+                    bodyText.setText("");
+                    break;
 
-            case R.id.sadnessbutton:
-                Toast.makeText(this, "Sadness button clicked", Toast.LENGTH_SHORT).show();
-                msgText = bodyText.getText().toString();
-                feelingList.add(new Feeling("sadness", msgText));
-                saveInFile();
-                //adapter.notifyDataSetChanged();
-                break;
+                case R.id.sadnessbutton:
+                    Toast.makeText(this, "Sadness button clicked", Toast.LENGTH_SHORT).show();
+                    feelingList.add(new Feeling("sadness", msgText));
+                    saveInFile();
+                    bodyText.setText("");
+                    break;
 
-            case R.id.fearbutton:
-                Toast.makeText(this, "Fear button clicked", Toast.LENGTH_SHORT).show();
-                msgText = bodyText.getText().toString();
-                feelingList.add(new Feeling("fear", msgText));
-                saveInFile();
-                //adapter.notifyDataSetChanged();
-                break;
+                case R.id.fearbutton:
+                    Toast.makeText(this, "Fear button clicked", Toast.LENGTH_SHORT).show();
+                    feelingList.add(new Feeling("fear", msgText));
+                    saveInFile();
+                    bodyText.setText("");
+                    break;
             }
+        } else {
+            Toast.makeText(this, "Message length too long (100 chars)", Toast.LENGTH_SHORT).show();
+            bodyText.setText("");
         }
+    }
 
 
     //Switches to the history activity and sends feelingList as string using gson
@@ -144,7 +144,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Type typeListFeelings = new TypeToken<ArrayList<Feeling>>() {
             }.getType();
             feelingList = gson.fromJson(reader, typeListFeelings);
-            System.out.println(feelingList.size());
 
 
         } catch (FileNotFoundException e) {
@@ -169,8 +168,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             writer.close();
             osw.close();
             fos.close();
-            System.out.println(json);
-            System.out.println(feelingList.size());
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -183,11 +180,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //Switches to the count activity and sends feelingList as string using gson
     public void viewCount( View view){
-        //Do something when user taps count button
         Intent intent = new Intent(this, count_activity.class);
         String arrayAsString = new Gson().toJson(feelingList);
         intent.putExtra("array", arrayAsString);
-        //intent.putExtra("feeling array", feelingList);
         startActivity(intent);
     }
 

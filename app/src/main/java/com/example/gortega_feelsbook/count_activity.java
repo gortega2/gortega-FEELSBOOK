@@ -22,6 +22,7 @@ public class count_activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Assigns the buttons and text
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_count_activity);
         Intent intent = getIntent();
@@ -34,11 +35,11 @@ public class count_activity extends AppCompatActivity {
         feartext = (TextView) findViewById(R.id.fearcount);
         updateCount(feelingList);
         displayCount();
-        System.out.println(feelingList.size());
 
 
     }
 
+    //See explanation in history_activity
     private void parseBack() {
         String arrayAsString = getIntent().getExtras().getString("array");
         Gson gson = new Gson();
@@ -47,7 +48,7 @@ public class count_activity extends AppCompatActivity {
         feelingList = gson.fromJson(arrayAsString, typeListFeelings);
     }
 
-
+    //Counts the number of occurrences of Feeling types
     private void updateCount(ArrayList<Feeling> array){
         lovecount = joycount = surprisecount = angercount = sadnesscount = fearcount = 0;
         for (int i = 0; i < array.size(); i++) {
@@ -67,6 +68,7 @@ public class count_activity extends AppCompatActivity {
         }
     }
 
+    //Displays the counts of emotions
     private void displayCount(){
         lovetext.setText("Love count: " + this.lovecount);
         joytext.setText("Joy count: " + this.joycount);
