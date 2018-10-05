@@ -99,28 +99,6 @@ public class history_activity extends AppCompatActivity {
         }
     }
 
-    //See explanation in MainActivity
-    private void saveInFile() {
-        try {
-            FileOutputStream fos = openFileOutput(FILENAME, 0);
-            OutputStreamWriter osw = new OutputStreamWriter(fos);
-            BufferedWriter writer = new BufferedWriter(osw);
-            Gson gson = new Gson();
-            String json = gson.toJson(feelingList);
-            writer.write(json);
-            writer.flush();
-            writer.close();
-            osw.close();
-            fos.close();
-
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
 
     //Launches the edit activity and sends the array list and position
     public void editActivity(View view, int position){
